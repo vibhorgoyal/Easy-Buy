@@ -12,8 +12,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;  
 import java.util.Scanner;
+public class saveproductpage {
 
-public class saveproductpage  {
 	public static void main (String[] arg)  {
 		Scanner in = new Scanner(System.in);
 		String pagelink;
@@ -21,30 +21,35 @@ public class saveproductpage  {
 		pagelink = in.nextLine();
 		System.out.println("You entered string "+ pagelink);
 		try {
-System.out.println("0st");
-	 		Connection connection = null;
-	    		Connection.Response response = null;
-	    		Document document = null;
-	    		String userAgent1 = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+".0.2228.0 Safari/536.38";
-System.out.println("1st");
-			connection = Jsoup.connect(pagelink).userAgent(userAgent1);
-System.out.println("2st");
-			response = connection.execute();
-System.out.println("3st");
-			document = connection.get();
-System.out.println("4st");
-			
-			FileWriter out = new FileWriter(new File("./downloaded_product_page.html"));
-		    	out.write(document.toString());
-		    	out.flush();
-		    	out.close();
-		    	System.out.println("File for page written successfully..");
-		}
+			String review_link = extract(pagelink);
+			System.out.println("You review link is "+ review_link);
+	    	}
 		catch (Exception e) {
 	    		e.printStackTrace();
 		}
 	}
-	private static char[] toString(int i) {
+	public static String extract(String htmlname) {
+		String userAgent1 = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+".0.2228.0 Safari/536.38";
+		Document doc=null;
+		while(doc==null){
+		try {
+			doc = Jsoup.connect(htmlname).timeout(30000).userAgent(userAgent1).get();
+			}
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		}
+		Elements link_reviews = doc.select("a[class=a-link-emphasis a-nowrap]");
+		String reviews_link = link_reviews.attr("href");
+		System.out.println(reviews_link);
+		return reviews_link;
+	}
+	private static char[] toString(int i) 
+	{
+		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }
