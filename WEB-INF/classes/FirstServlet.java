@@ -48,6 +48,46 @@ public class FirstServlet extends HttpServlet {
 					neutral.add(p);
 				}
 			}
+			
+			Collections.sort(positive,new Comparator<Pair>(){
+				@Override public int compare(Pair p1 ,Pair p2)
+				{
+					float fs = p1.getScore()-p2.getScore();
+					if(fs>0)
+					return -1;
+					else if(fs<0)
+					return  1;
+					return 0;
+				}
+			});
+			Collections.sort(negative,new Comparator<Pair>(){
+				@Override public int compare(Pair p1 ,Pair p2)
+				{
+					float fs = p1.getScore()-p2.getScore();
+					if(fs>0)
+					return 1;
+					else if(fs<0)
+					return  -1;
+					return 0;
+				}
+			});
+			int i;
+			ArrayList<String> positiv = new ArrayList<String>();
+			for(i=0;i<10&&i<positive.size();i++)
+			{
+				Pair p1 = positive.get(i);
+				positiv.add(p1.getReview());
+			 	out.println(p1.getScore());
+			 	out.println("<br>");
+			}
+			ArrayList<String> negativ = new ArrayList<String>();
+			for(i=0;i<10&&i<negative.size();i++)
+			{
+				Pair p1 = negative.get(i);
+				negativ.add(p1.getReview());
+				out.println(p1.getScore());
+				out.println("<br>");
+			}
 		}
 		}
 		catch(Exception e) {
