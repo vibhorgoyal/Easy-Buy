@@ -88,6 +88,39 @@ public class FirstServlet extends HttpServlet {
 				out.println(p1.getScore());
 				out.println("<br>");
 			}
+			String color="";
+				float total = positive.size() + negative.size() + neutral.size();
+				float a = (positive.size()/total)*100;
+				float b = (negative.size()/total)*100;
+				float c  = (neutral.size()/total)*100;
+				if(a>b)
+				{
+					if(a>c)
+						color = "#00bfff";
+					else
+						color = "32cd32";
+				}	
+				else
+				{
+					if(b>c)
+						color = "d3d3d3";
+					else
+						color="32cd32";
+				}
+
+				req.setAttribute("Positive",(Float)a);
+				req.setAttribute("Negative",(Float)b);
+				req.setAttribute("Neutral",(Float)c);
+				req.setAttribute("posReview",positiv);
+				req.setAttribute("negReview",negativ);
+				req.setAttribute("color",(String)color);
+				 out.println(positive.size()+" "+a+"<br>");
+				 out.println(negative.size()+" "+b+"<br>");
+				 out.println(neutral.size()+" "+c+"<br>");
+				 RequestDispatcher requestDispatcher; 
+				requestDispatcher = req.getRequestDispatcher("/result.jsp");
+				requestDispatcher.forward(req, res);
+				
 		}
 		}
 		catch(Exception e) {
