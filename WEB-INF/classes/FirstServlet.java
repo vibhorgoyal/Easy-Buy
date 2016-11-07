@@ -4,11 +4,34 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.util.*;
 public class FirstServlet extends HttpServlet {
+	private int apiIndex,apiCount;
+
+	 public void init() 
+	  { 
+	     // Reset hit counter.
+		    apiCount = 0;
+  		    apiIndex = 0;
+          } 
 
 	public static void main(String[] args) {
 		System.out.println("hello world");	
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res)throws IOException, ServletException {
+		int totalApi=13;
+		String apiKeys[] = new String[totalApi];
+		apiKeys[0]="de0b127019a70b21b95e26464d04240aa03b6f4f";
+		apiKeys[1]="4ff693b80bfacab882959b52cf1954c02ccfdab5";
+		apiKeys[2]="f866314d9361dc6f827fe1405782576423b932f6";
+		apiKeys[3]="d01dbde44977709a57ebc79e56543ebc4bd6ad93";
+		apiKeys[4]="7f7e353d293955d4a3e70d0773c4345fb549129f";
+		apiKeys[5]="f35f423fcbc7769d62e0a81737098f8fe7b0e0ad";
+		apiKeys[6]="69b674a8fc0b650f9cc857d9c7abe4e8a1169ca2";
+		apiKeys[7]="82d0575a361238f791adaf8b3bacf6782c0e4888";
+		apiKeys[8]="6c3516dffa769227b4a57ca4457711e5b2a1cd46";
+		apiKeys[9]="b9ee89c49e129f428c33031ca8a278ce4248306f";
+		apiKeys[10]="2b68a5bfbda68e3c12c88dd60ab32d14948ce328";
+		apiKeys[11]="60ad303c39ce16e8e24ac0d78605ddc70f599bd3";
+		
 		res.setContentType("text/html");
 		PrintWriter out=res.getWriter();
 
@@ -32,7 +55,17 @@ public class FirstServlet extends HttpServlet {
 			//out.println(reviews.size());
 			for(String re : reviews)
 			{
-				float res1 = Test.run(re,"de0b127019a70b21b95e26464d04240aa03b6f4f");
+				apiCount++;
+				if(apiCount==1000*totalApi)
+				{
+					apiCount=0;
+					apiIndex=-1;
+				}
+				if(apiCount%1000==0)
+				{
+					apiIndex = (apiIndex+1)%totalApi;
+				}
+				float res1 = Test.run(re,apiKeys[apiIndex]);
 				Pair p = new Pair(res1,re);
 
 				if(res1>0)
