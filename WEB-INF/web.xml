@@ -1,0 +1,19 @@
+<web-app>
+	<servlet>
+		<servlet-name>fs</servlet-name>
+		<servlet-class>pack.FirstServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>fs</servlet-name>
+		<url-pattern>/abc</url-pattern>
+	</servlet-mapping>
+	<context-param>  
+    <param-name>count</param-name>  
+    <param-value>800</param-value>  
+  </context-param> 	
+  <context-param>  
+    <param-name>index</param-name>  
+    <param-value>0</param-value>  
+  </context-param> 	
+</web-app>
